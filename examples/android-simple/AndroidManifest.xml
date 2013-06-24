@@ -6,6 +6,7 @@
     package="com.example.dagger.simple">
 
   <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="17"/>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
   <application
       android:label="@string/app_name"
@@ -19,5 +20,9 @@
         <category android:name="android.intent.category.DEFAULT"/>
       </intent-filter>
     </activity>
+
+    <!-- Not used, but the reason for all the DI overhead at startup. -->
+    <activity
+        android:name=".ui.HomeActivity2" />
   </application>
 </manifest>

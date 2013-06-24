@@ -17,8 +17,13 @@ package com.example.dagger.simple.ui;
 
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.View;
 import com.example.dagger.simple.DemoBaseActivity;
+import com.example.dagger.simple.R;
+
 import javax.inject.Inject;
+
+import static android.view.View.OnClickListener;
 
 public class HomeActivity extends DemoBaseActivity {
   @Inject LocationManager locationManager;
@@ -27,6 +32,12 @@ public class HomeActivity extends DemoBaseActivity {
     super.onCreate(savedInstanceState);
     // After the super.onCreate call returns we are guaranteed our injections are available.
 
-    // TODO do something with the injected dependencies here!
+    setContentView(R.layout.main);
+    findViewById(R.id.go_to_2).setOnClickListener(new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            HomeActivity2.show(HomeActivity.this);
+        }
+    });
   }
 }

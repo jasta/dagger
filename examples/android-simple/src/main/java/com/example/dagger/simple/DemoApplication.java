@@ -16,6 +16,7 @@
 package com.example.dagger.simple;
 
 import android.app.Application;
+import android.os.Debug;
 import dagger.ObjectGraph;
 import java.util.Arrays;
 import java.util.List;
@@ -23,20 +24,31 @@ import java.util.List;
 public class DemoApplication extends Application {
   private ObjectGraph graph;
 
+  private static final boolean DEBUG_TRACING = false;
+
   @Override public void onCreate() {
     super.onCreate();
 
+    System.out.println("pre-graph");
+    if (DEBUG_TRACING) Debug.startMethodTracing("graph");
     graph = ObjectGraph.create(getModules().toArray());
+    if (DEBUG_TRACING) Debug.stopMethodTracing();
+    System.out.println("post-graph");
   }
 
   protected List<Object> getModules() {
     return Arrays.asList(
         new AndroidModule(this),
-        new DemoModule()
+        new DemoModule(),
+        new DemoModule2()
     );
   }
 
   public void inject(Object object) {
+    System.out.println("pre-inject: " + object.getClass().getSimpleName());
+    if (DEBUG_TRACING) Debug.startMethodTracing("inject");
     graph.inject(object);
+    if (DEBUG_TRACING) Debug.stopMethodTracing();
+    System.out.println("post-inject: " + object.getClass().getSimpleName());
   }
 }
